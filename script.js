@@ -11,121 +11,114 @@ class Animal {
   get name() {
     return this.#name;
   }
-  set name(name) {
-    this.#name = name;
+
+  set name(value) {
+    this.#name = value;
   }
   get species() {
     return this.#species;
   }
-  set species(species) {
-    this.#species = species;
+
+  set species(value) {
+    this.#species = value;
   }
   get energy() {
     return this.#energy;
   }
-  set energy(energy) {
-    this.#energy = energy;
+
+  set energy(value) {
+    this.#energy = value;
   }
 
-  attack(target, amount) {
-    // The energy level of both parties will decrease 10.
-    this.#energy -= amount;
-    target.energy -= amount;
+  canAttack(target, energyCost) {
+    if (this.#energy > energyCost) {
+      this.#energy -= energyCost;
+      target.energy -= energyCost;
+    } else {
+      console.log(`${this.#name} doesn't have enough energy to attack ${target.name}`);
+    }
   }
+  attack(target, energyCost) {
+    // The energy level of both parties will decrease 10.
+    this.canAttack(target, energyCost);
+  }
+
   eat() {
+    //The energy level will increase 10.
     this.#energy += 10;
   }
 }
 
 class Bird extends Animal {
   #canFly;
-
   constructor(name, species, canFly) {
-    super(name, species, 100); // I'm passing the energy, for bird is 100 as default.
+    super(name, species, 100);
     this.#canFly = canFly;
   }
 
   get canFly() {
     return this.#canFly;
   }
-  set canFly(canFly) {
-    this.#canFly = canFly;
+
+  set canFly(value) {
+    this.#canFly = value;
   }
 
   attack(target) {
     // The energy level of both parties will decrease 20.
-    this.energy -= 20;
-    target.energy -= 20;
+    super.attack(target, 20);
   }
-
 }
 
 class Mammal extends Animal {
   #furColor;
-
   constructor(name, species, furColor) {
-    super(name, species, 200); // I'm passing the energy, for mammal is 200 as default.
+    super(name, species, 200);
     this.#furColor = furColor;
   }
 
   get furColor() {
     return this.#furColor;
   }
-  set furColor(furColor) {
-    this.#furColor = furColor;
+
+  set furColor(value) {
+    this.#furColor = value;
   }
 
   attack(target) {
     // The energy level of both parties will decrease 50.
-    this.energy -= 50;
-    target.energy -= 50;
+    super.attack(target, 50);
   }
   eat() {
+    //The energy level will increase 20.
     this.energy += 20;
   }
 }
 
 class Reptile extends Animal {
   #coldBlooded;
-
   constructor(name, species, coldBlooded) {
-    super(name, species, 100); // I'm passing the energy, for reptile is 100 as default.
+    super(name, species, 100);
     this.#coldBlooded = coldBlooded;
   }
 
   get coldBlooded() {
     return this.#coldBlooded;
   }
-  set coldBlooded(coldBlooded) {
-    this.#coldBlooded = coldBlooded;
+
+  set coldBlooded(value) {
+    this.#coldBlooded = value;
   }
+
   attack(target) {
-    // The energy level of both parties will decrease 10.
-    this.energy -= 30;
-    target.energy -= 30;
+    // The energy level of both parties will decrease 30.
+    super.attack(target, 30);
   }
   eat() {
+    //The energy level will increase 15.
     this.energy += 15;
   }
 }
-
-const animal1 = new Animal("pretinha", "canina", 3);
-
-
-const eagle = new Bird("Eagle", "Bird of Prey", true);
-
-
-const lion = new Mammal("Lion", "Big Cat", "Golden");
-
-
-const snake = new Reptile("Snake", "Serpent", true);
-
-
-//eagle.attack(lion)
-
-
-/* const animal1 = new Animal("pretinha", "canina", 3);
-console.log(animal1);
 
 const eagle = new Bird("Eagle", "Bird of Prey", true);
 console.log(
@@ -141,7 +134,15 @@ const snake = new Reptile("Snake", "Serpent", true);
 console.log(
   `Name: ${snake.name}, Species: ${snake.species}, Cold-Blooded: ${snake.coldBlooded}`
 );
-
-eagle.attack(lion)
-console.log(eagle.energy);
-console.log(lion.energy); */
+console.log(lion.energy); //200
+console.log(eagle.energy);  //100
+eagle.attack(lion); 
+console.log(lion.energy); //180
+console.log(eagle.energy); //80
+lion.attack(eagle); 
+console.log(lion.energy); //130
+console.log(eagle.energy); //30
+eagle.eat();
+lion.eat();
+snake.eat();
+console.log(snake.energy); // 100 + 15
