@@ -1,3 +1,5 @@
+> **Note:** This repository is a personal backup of coursework originally developed as part of my studies at Cornerstone College. It was cloned from a institutional and private repository to preserve my contributions and development history.
+
 # Inheritance Assignments - Jungles
 
 
@@ -86,5 +88,3 @@ eagle.attack(lion);
 - You can add validations to check if the energy level is sufficient before each attack. 
 
 - Refactor the design pattern to avoid duplications.
-
-
